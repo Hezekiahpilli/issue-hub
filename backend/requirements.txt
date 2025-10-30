@@ -4,6 +4,7 @@ sqlalchemy==2.0.44
 psycopg2-binary==2.9.10
 alembic==1.17.0
 pydantic==2.12.3
+pydantic-settings==2.6.1
 pydantic[email]
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
