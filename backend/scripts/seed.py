@@ -3,14 +3,16 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from sqlalchemy.orm import Session
-from app.db.base import SessionLocal, engine, Base
+from app.db.base import Base, get_engine, get_session_local
 from app.models import User, Project, ProjectMember, Issue, Comment, MemberRole, IssueStatus, IssuePriority
 from app.core.security import get_password_hash
 
 def seed_database():
     # Create tables
+    engine = get_engine()
     Base.metadata.create_all(bind=engine)
     
+    SessionLocal = get_session_local()
     db = SessionLocal()
     
     try:
@@ -144,7 +146,7 @@ def seed_database():
                 project_id=projects[1].id,
                 title="App crashes on startup on iOS 15",
                 description="Multiple users report the app crashing immediately after launch on iOS 15 devices.",
-                status=IssueStatus.critical,
+                status=IssueStatus.open,
                 priority=IssuePriority.critical,
                 reporter_id=users[3].id,
                 assignee_id=users[1].id

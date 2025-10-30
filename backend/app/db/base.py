@@ -7,14 +7,16 @@ Base = declarative_base()
 
 
 def get_engine():
-    from app.core.config import settings
+    import os
 
-    if settings.DATABASE_URL.startswith("sqlite"):
+    database_url = os.getenv("DATABASE_URL", "sqlite:///./issuehub.db")
+
+    if database_url.startswith("sqlite"):
         return create_engine(
-            settings.DATABASE_URL,
+            database_url,
             connect_args={"check_same_thread": False},
         )
-    return create_engine(settings.DATABASE_URL)
+    return create_engine(database_url)
 
 
 def get_session_local():
