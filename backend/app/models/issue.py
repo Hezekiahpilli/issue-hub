@@ -30,8 +30,6 @@ class Issue(Base):
     assignee_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), default=func.now())
-    
-    # Relationships
     project = relationship("Project", back_populates="issues")
     reporter = relationship("User", foreign_keys=[reporter_id], back_populates="reported_issues")
     assignee = relationship("User", foreign_keys=[assignee_id], back_populates="assigned_issues")
