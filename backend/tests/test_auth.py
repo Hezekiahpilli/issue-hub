@@ -11,8 +11,8 @@ def test_signup(client):
     assert "id" in data
     assert "password" not in data
 
-def test_signup_duplicate_email(client, test_user):
-    # First signup is in conftest.py
+def test_signup_duplicate_email(client, test_user, auth_headers):
+    # First signup is in auth_headers fixture (conftest.py)
     # Try to signup with same email
     response = client.post("/api/auth/signup", json=test_user)
     assert response.status_code == 400
