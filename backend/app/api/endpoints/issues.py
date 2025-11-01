@@ -45,7 +45,8 @@ def create_issue(
         priority=issue_data.priority,
         status=IssueStatus.open,
         reporter_id=current_user.id,
-        assignee_id=issue_data.assignee_id
+        assignee_id=issue_data.assignee_id,
+        expected_completion_date=issue_data.expected_completion_date
     )
     
     db.add(issue)
@@ -114,6 +115,7 @@ def list_issues(
             "priority": issue.priority,
             "reporter": issue.reporter,
             "assignee": issue.assignee,
+            "expected_completion_date": issue.expected_completion_date,
             "created_at": issue.created_at,
             "updated_at": issue.updated_at,
             "comment_count": comment_count
