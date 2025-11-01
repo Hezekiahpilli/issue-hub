@@ -8,6 +8,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   checkAuth: () => Promise<void>;
 }
@@ -19,6 +20,20 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: true,
 
   login: async (email: string, password: string) => {
+    const res = await authApi.login({ email, password });
+    const token = res.data.access_token as string;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', token);
+    }
+    set({ token, isAuthenticated: true });
+    // Fetch user profile
+    const me = await authApi.me();
+    set({ user: me.data });
+  },
+
+  signup: async (name: string, email: string, password: string) => {
+    await authApi.signup({ name, email, password });
+    // After successful signup, log in the user
     const res = await authApi.login({ email, password });
     const token = res.data.access_token as string;
     if (typeof window !== 'undefined') {
