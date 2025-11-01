@@ -28,6 +28,7 @@ class Issue(Base):
     priority = Column(Enum(IssuePriority), nullable=False, default=IssuePriority.medium)
     reporter_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     assignee_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    expected_completion_date = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), default=func.now())
     project = relationship("Project", back_populates="issues")

@@ -27,6 +27,7 @@ interface CreateIssueForm {
   description: string;
   priority: IssuePriority;
   assignee_id: string;
+  expected_completion_date: string;
 }
 
 interface Filters {
@@ -135,6 +136,7 @@ export default function ProjectDetail() {
         description: data.description || undefined,
         priority: data.priority,
         assignee_id: data.assignee_id ? Number(data.assignee_id) : undefined,
+        expected_completion_date: data.expected_completion_date || undefined,
       });
       toast.success('Issue created successfully');
       setShowCreateModal(false);
@@ -459,6 +461,17 @@ export default function ProjectDetail() {
                           ))}
                         </select>
                       </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700">
+                        Expected Completion Date
+                      </label>
+                      <input
+                        {...register('expected_completion_date')}
+                        type="datetime-local"
+                        className="mt-1 input-field"
+                      />
                     </div>
                     
                     <div className="flex justify-end space-x-3 pt-4">

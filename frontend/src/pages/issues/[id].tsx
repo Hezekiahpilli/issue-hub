@@ -26,6 +26,7 @@ interface UpdateForm {
   status: IssueStatus;
   priority: IssuePriority;
   assignee_id: string;
+  expected_completion_date: string;
 }
 
 const statusOptions = [
@@ -89,6 +90,12 @@ export default function IssueDetail() {
       setUpdateValue('status', response.data.status);
       setUpdateValue('priority', response.data.priority);
       setUpdateValue('assignee_id', response.data.assignee_id?.toString() || '');
+      if (response.data.expected_completion_date) {
+        const date = new Date(response.data.expected_completion_date);
+        setUpdateValue('expected_completion_date', date.toISOString().slice(0, 16));
+      } else {
+        setUpdateValue('expected_completion_date', '');
+      }
     } catch (error) {
       toast.error('Failed to load issue');
       router.push('/projects');
@@ -127,6 +134,7 @@ export default function IssueDetail() {
         status: data.status,
         priority: data.priority,
         assignee_id: data.assignee_id ? Number(data.assignee_id) : null,
+        expected_completion_date: data.expected_completion_date || undefined,
       });
       toast.success('Issue updated');
       setIsEditing(false);
@@ -257,6 +265,17 @@ export default function IssueDetail() {
                         ))}
                       </select>
                     </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Expected Completion Date
+                      </label>
+                      <input
+                        {...registerUpdate('expected_completion_date')}
+                        type="datetime-local"
+                        className="input-field"
+                      />
+                    </div>
                   </div>
                   
                   <div className="flex justify-end space-x-3">
@@ -327,6 +346,14 @@ export default function IssueDetail() {
                         {format(new Date(issue.updated_at), 'MMM d, yyyy h:mm a')}
                       </span>
                     </div>
+                    {issue.expected_completion_date && (
+                      <div>
+                        <span className="text-gray-500">Expected Completion:</span>
+                        <span className="ml-2 text-gray-900">
+                          {format(new Date(issue.expected_completion_date), 'MMM d, yyyy h:mm a')}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

@@ -10,6 +10,7 @@ class IssueBase(BaseModel):
     description: Optional[str] = None
     priority: IssuePriority = IssuePriority.medium
     assignee_id: Optional[int] = None
+    expected_completion_date: Optional[datetime] = None
 
 class IssueCreate(IssueBase):
     pass
@@ -20,6 +21,7 @@ class IssueUpdate(BaseModel):
     status: Optional[IssueStatus] = None
     priority: Optional[IssuePriority] = None
     assignee_id: Optional[int] = None
+    expected_completion_date: Optional[datetime] = None
 
 class Issue(IssueBase):
     id: int
@@ -28,6 +30,7 @@ class Issue(IssueBase):
     reporter_id: int
     reporter: Optional[User] = None
     assignee: Optional[User] = None
+    expected_completion_date: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
     comment_count: Optional[int] = 0
@@ -43,6 +46,7 @@ class IssueList(BaseModel):
     priority: IssuePriority
     reporter: User
     assignee: Optional[User] = None
+    expected_completion_date: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
     comment_count: int = 0

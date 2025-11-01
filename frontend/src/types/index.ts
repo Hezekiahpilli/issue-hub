@@ -35,6 +35,7 @@ export interface Issue {
   reporter_id: number;
   assignee?: User;
   assignee_id?: number;
+  expected_completion_date?: string;
   created_at: string;
   updated_at: string;
   comment_count?: number;
