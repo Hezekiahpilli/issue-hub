@@ -49,7 +49,24 @@ def create_project(
     db.commit()
     db.refresh(project)
     
-    return project
+    # Get members with user info
+    members_data = []
+    for pm in project.members:
+        members_data.append({
+            "user": pm.user,
+            "role": pm.role
+        })
+    
+    project_dict = {
+        "id": project.id,
+        "name": project.name,
+        "key": project.key,
+        "description": project.description,
+        "created_at": project.created_at,
+        "members": members_data
+    }
+    
+    return ProjectSchema(**project_dict)
 
 @router.get("", response_model=List[ProjectList])
 def list_projects(
