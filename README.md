@@ -2,12 +2,21 @@
 
 A minimal yet powerful bug tracking system built with FastAPI (Python) backend and Next.js (React) frontend. Teams can create projects, file issues, comment on them, and track status with a clean, responsive UI.
 
+## 🆕 Recent Updates
+
+### Latest Changes
+- **Expected Completion Date**: Added ability to set and track expected completion dates for issues
+- **Issue Deletion**: Fixed issue deletion functionality to properly handle cascading comments
+- **Database Schema**: Enhanced Issue model with new expected_completion_date field
+- **UI Improvements**: Added datetime picker for expected completion dates in issue forms
+
 ## 🚀 Features
 
 ### Core Functionality
 - **User Authentication**: Secure JWT-based authentication with signup/login/logout
 - **Project Management**: Create and manage multiple projects with team members
 - **Issue Tracking**: Full CRUD operations for issues with status and priority management
+- **Expected Completion Date**: Set and track expected completion dates for issues
 - **Comments System**: Threaded discussions on issues
 - **Role-Based Access**: Project maintainers vs members with different permissions
 - **Search & Filter**: Advanced filtering by status, priority, assignee with text search
@@ -74,6 +83,8 @@ alembic init alembic
 alembic revision --autogenerate -m "Initial migration"
 alembic upgrade head
 ```
+
+**Note**: The database schema is auto-created on startup. For fresh installations, the seed script will automatically create all tables.
 
 6. (Optional) Seed the database with demo data:
 ```bash
@@ -266,6 +277,7 @@ npx vercel
 3. Basic search (can be enhanced with PostgreSQL full-text search)
 4. No real-time updates (can be added with WebSockets)
 5. Limited to two role types (can be expanded)
+6. Expected completion dates do not trigger notifications (can be added)
 
 ## 🔮 Future Enhancements
 
