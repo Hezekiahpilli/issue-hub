@@ -30,7 +30,6 @@ class Issue(IssueBase):
     reporter_id: int
     reporter: Optional[User] = None
     assignee: Optional[User] = None
-    expected_completion_date: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
     comment_count: Optional[int] = 0
